@@ -1,0 +1,7 @@
+{
+    "appzName" : "ASPIC SSO SERVER",
+    "error_arguments" : "Appel du serveur incorrect.",
+    "error_unknownservice" : "Cette application est inconnue.",
+    "error_security" : "une erreur de sécurité est survenue.",
+    "error_userunauthorized" : "Cet utilisateur ne peut acceder à cet applicatif."
+}

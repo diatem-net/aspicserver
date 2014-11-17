@@ -1,0 +1,7 @@
+{
+    "kapoue" : {
+	"url" : "http://aspicclientdev.diatem.net/",
+	"privateKey" : "123",
+	"returnUrl" : "http://aspicclientdev.diatem.net/test.php"
+    }
+}
