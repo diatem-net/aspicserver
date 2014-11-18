@@ -34,6 +34,7 @@ class SecureCookie {
 
     
     public static function setSecureCookie($serviceId, $cookiename, $value, $privateKey, $expire = 0, $path = '', $domain= '', $secure = false, $httponly = null){
+
 	$json = json_encode($value);
 	$securedValue = openssl_encrypt($json, self::$encodeMethod, $privateKey, false, self::$initializationVector);
 
@@ -77,6 +78,7 @@ class SecureCookie {
 	}
 	
 	$controlString = hash(self::$hashMethod, $serviceId.'|'.$expire.'|'.$encoded.'|'.$md5UserAgent);
+	
 	if($controlString != $control){
 	    return false;
 	}

@@ -1,0 +1,74 @@
+$mainColor:#a4c545;
+$headerBackColor:white;
+$stdTextColor:#484848;
+$formTextColor:white;
+$formPlaceholderColor:white;
+$formErrorBackColor:#ff3939;
+
+$formHoverBackColor:white;
+$formHoverTextColor:$stdTextColor;
+
+$buttonBackColor:white;
+$buttonTextColor:$stdTextColor;
+$buttonHoverBackColor:#b4eb16;
+
+$stdTextSize:16px;
+$stdIconSize:30px;
+
+$footerBackColor:#404040;
+$footerTextColor:#cacaca;
+
+%hoverStyle{
+    &:focus{
+	color:$formHoverTextColor;
+    }
+    &:hover{
+	color:$formHoverTextColor;
+    }
+}
+
+%backgroundGradient{
+    background: #bfd255; /* Old browsers */
+    background: -moz-linear-gradient(top,  #bfd255 0%, #75af28 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bfd255), color-stop(100%,#75af28)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #bfd255 0%,#75af28 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #bfd255 0%,#75af28 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #bfd255 0%,#75af28 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #bfd255 0%,#75af28 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#75af28',GradientType=0 ); /* IE6-9 */
+}
+
+%formElement{
+    border: 3px solid white;
+    background:none;
+    max-width: 305px;
+    width: 100%;
+    color:$formTextColor;
+    height:58px;
+    padding:10px;
+    display:block;
+    margin:auto;
+    margin-top:20px;
+    font-size:$stdTextSize;
+}
+
+%gothic {
+    font-family: "CenturyGothicRegular", sans-serif;
+}
+
+%font-light {
+    @extend %gothic;
+    font-weight: 300;
+}
+%font-normal {
+    @extend %gothic;
+    font-weight: 400;
+}
+%font-semibold {
+    @extend %gothic;
+    font-weight: 600;
+}
+%font-bold {
+    @extend %gothic;
+    font-weight: 700;
+}

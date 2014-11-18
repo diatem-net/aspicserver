@@ -1,0 +1,15 @@
+footer{
+    position:fixed;
+    height:30px;
+    
+    background-color:$footerBackColor;
+    color:$footerTextColor;
+    
+    bottom:0px;
+    width:100vw;
+    
+    text-align:center;
+    padding:6px;
+    
+    font-size:12px;
+}

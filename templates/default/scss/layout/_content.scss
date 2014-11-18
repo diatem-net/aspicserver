@@ -1,0 +1,111 @@
+body{
+    background-color: $mainColor;
+    /*@extend %backgroundGradient;*/
+    font-size:$stdTextSize;
+}
+
+section{
+    height:65vh;
+    padding:8vh;
+    
+    .content{
+	padding-bottom:60px;
+    }
+}
+
+form{
+    input{
+	@extend %formElement;
+	@include transition(all, 0.2s, ease-in-out);
+	
+	&:hover{
+	    background-color:$formHoverBackColor;
+	    color:$formHoverTextColor;
+	}
+	&:focus{
+	    background-color:$formHoverBackColor;
+	    color:$formHoverTextColor;
+	}
+	
+	&.erreur{
+	    background-color:$formErrorBackColor;
+	}
+    }
+    
+
+    button[type=submit]{
+	@extend %formElement;
+	background-color: $buttonBackColor;
+	color:$buttonTextColor;
+	text-align:left;
+	padding-top:14px;
+	
+	@include transition(all, 0.2s, ease-in-out);
+	
+	i{
+	    float:right;
+	    font-size:$stdIconSize;
+	    position:relative;
+	    top:-8px;
+	}
+	
+	&:hover{
+	    background-color:$buttonHoverBackColor;
+	    border:3px solid $buttonHoverBackColor;
+	}
+    }
+    
+    input[placeholder]{
+	color:$formPlaceholderColor;
+	&:focus{
+	    color:$formHoverTextColor;
+	}
+	&:hover{
+	    color:$formHoverTextColor;
+	}
+    }
+
+    ::-webkit-input-placeholder {
+	color: $formPlaceholderColor;
+	&:focus{
+	    color:$formHoverTextColor;
+	}
+	&:hover{
+	    color:$formHoverTextColor;
+	}
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+	color: $formPlaceholderColor; 
+	&:focus{
+	    color:$formHoverTextColor;
+	}
+	&:hover{
+	    color:$formHoverTextColor;
+	}
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+	color: $formPlaceholderColor;
+	&:focus{
+	    color:$formHoverTextColor;
+	}
+	&:hover{
+	    color:$formHoverTextColor;
+	}
+    }
+
+    :-ms-input-placeholder {  
+	color: $formPlaceholderColor;  
+	&:focus{
+	    color:$formHoverTextColor;
+	}
+	&:hover{
+	    color:$formHoverTextColor;
+	}
+    }
+}
+
+.small_erreur{
+    display:none;
+}

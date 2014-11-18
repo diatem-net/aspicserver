@@ -1,0 +1,10 @@
+section[role=login]{
+    text-align:center;
+    
+    .welcome{
+	color:$stdTextColor;
+	@extend %font-semibold;
+	padding-bottom:2vh;
+	font-size:18px;
+    }
+}

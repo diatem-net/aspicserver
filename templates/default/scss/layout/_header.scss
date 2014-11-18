@@ -1,0 +1,27 @@
+
+header{
+    background-color: $headerBackColor;
+    
+    
+    display: table-cell;
+    vertical-align: middle;
+    
+    width:100vw;
+    height:35vh;
+    
+    .logotype{
+	margin:auto;
+	max-width: 305px;
+	width:80vw;
+	max-height: 207px;
+	height:90%;
+	text-align:center;
+	
+	img{
+
+	    height:100%;
+	    
+	}
+    }
+    
+}

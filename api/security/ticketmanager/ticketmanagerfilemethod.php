@@ -19,10 +19,14 @@ class TicketManagerFileMethod{
     }
     
     public function get($id){
-	$f = new File($this->dataFolder.$id, false);
-	$c = $f->getContent();
-	
-	return $c;
+	try{
+	    $f = new File($this->dataFolder.$id, false);
+	    $c = $f->getContent();
+	    
+	    return $c;
+	}catch(\Exception $e){
+	    return false;
+	}
     }
     
     public function delete($id){
@@ -30,9 +34,14 @@ class TicketManagerFileMethod{
 	$f->delete();
     }
     
-    public function clearOld(){
-    }
-    
     public function clear(){
+	$handle=opendir($this->dataFolder);
+	while ($File = readdir($handle)) {
+	    if ($File != "." && $File != "..") {
+		unlink($this->dataFolder.$File);
+		
+	    }
+	}
+	closedir($handle);
     }
 }
