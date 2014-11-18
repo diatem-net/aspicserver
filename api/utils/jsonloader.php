@@ -15,5 +15,20 @@ class JsonLoader{
 	
 	return $data;
     }
+    
+    public static function loadPhpFile($file) {
+	include $file;
+	
+	if(!isset($data)){
+	    throw new \Exception('Lecture fichier '.$file.' impossible.');
+	}
+	$ddata = json_decode($data, true);
+	
+	if(!$ddata){
+	    throw new \Exception('Erreur de traitement JSON du fichier '.$file);
+	}
+	
+	return $ddata;
+    }
    
 }

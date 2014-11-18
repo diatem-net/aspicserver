@@ -1,0 +1,42 @@
+section[role=error]{
+    position:relative;
+    max-width:900px;
+    margin:auto;
+    
+    padding-left:0px;
+    padding-right:0px;
+    
+    .message{
+	text-align:right;
+	font-size:25px;
+	
+	margin-right:50vmin;
+	margin-top:20vmin;
+	
+	h1{
+	    font-size:50px;
+	    @extend %font-bold;
+	    margin-bottom:0px;
+	}
+    }
+
+    i{
+	font-size: 50vmin;
+	position:absolute;
+	top:-15vmin;
+	right:0px;
+    }
+}
+
+@media screen and (max-width:600px){
+    section[role=error] i{
+	display:none;
+    }
+    
+    section[role=error] .message{
+	margin-right:0px;
+	text-align:center;
+	padding-left:20px;
+	padding-right:20px;
+    }
+}

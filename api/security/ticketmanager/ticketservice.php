@@ -35,12 +35,6 @@ class TicketService{
 	self::$ticketManager->delete($id);
     }
     
-    public static function clearOld(){
-	self::setTicketManager();
-	
-	self::$ticketManager->clearOld();
-    }
-    
     public static function clear(){
 	self::setTicketManager();
 	

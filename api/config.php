@@ -7,10 +7,11 @@ use aspic\utils\JsonLoader;
 class Config{
     
     private static $data;
+    private static $version = '0.1.0';
     
     private static function loadConfig(){
 	if(!self::$data){
-	    self::$data = JsonLoader::loadFile('../config/configuration.json');
+	    self::$data = JsonLoader::loadPhpFile('../config/configuration.php');
 	}
     }
     
@@ -114,6 +115,11 @@ class Config{
 	return self::$data['security']['ssoUID'];
     }
     
+    public static function getSecuritySslEnabled(){
+	self::loadConfig();
+	return (self::$data['security']['sslEnabled'] == 'true') ? true : false;
+    }
+    
     public static function getAppzCredentialCheckEnabled(){
 	self::loadConfig();
 	return (self::$data['querying']['appzCredentialCheckQuerying']['enabled'] == 'true') ? true : false;
@@ -127,6 +133,78 @@ class Config{
     public static function getAppzCredentialCheckParameters(){
 	self::loadConfig();
 	return self::$data['querying']['appzCredentialCheckQuerying']['parameters'];
+    }
+    
+    public static function getUserDataQueryingEnabled(){
+	self::loadConfig();
+	return (self::$data['querying']['userDataQuerying']['enabled'] == 'true') ? true : false;
+    }
+    
+    public static function getUserDataQueryingMethod(){
+	self::loadConfig();
+	return self::$data['querying']['userDataQuerying']['method'];
+    }
+    
+    public static function getUserDataQueryingParameters(){
+	self::loadConfig();
+	return self::$data['querying']['userDataQuerying']['parameters'];
+    }
+    
+    public static function getSecuritySessionMaxTime(){
+	self::loadConfig();
+	return self::$data['security']['sessionMaxTime'];
+    }
+    
+    public static function getLogsEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['enabled'] == 'true') ? true : false;
+    }
+    
+    public static function getLogsticketCheckEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['log_ticketcheck'] == 'true') ? true : false;
+    }
+    
+    public static function getLogsPhpErrorsEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['log_phperrors'] == 'true') ? true : false;
+    }
+    
+    public static function getLogsCnxFailEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['log_cnxfail'] == 'true') ? true : false;
+    }
+    
+    public static function getLogsCnxSuccessEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['log_cnxsuccess'] == 'true') ? true : false;
+    }
+    
+    public static function getLogsSecurityAlertEnabled(){
+	self::loadConfig();
+	return (self::$data['logs']['log_securityalert'] == 'true') ? true : false;
+    }
+    
+    public static function getSecurityCronKey(){
+	self::loadConfig();
+	return self::$data['security']['cronKey'];
+    }
+    
+    public static function getSecurityCronIp(){
+	self::loadConfig();
+	return self::$data['security']['cronIp'];
+    }
+    
+    public static function getHttpOnlyCookiesEnabled(){
+	if(PHP_VERSION_ID < 50200){
+	    return false;
+	}else{
+	    return true;
+	}
+    }
+    
+    public static function getVersion(){
+	return self::$version;
     }
     
 }

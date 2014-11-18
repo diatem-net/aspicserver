@@ -7,6 +7,7 @@ use aspic\security\CredentialTicket;
 use aspic\Service;
 use jin\lang\ListTools;
 use aspic\Config;
+use aspic\Logs;
 
 class RestAppz{
     public function __construct() {
@@ -18,6 +19,13 @@ class RestAppz{
     }
     
     private function checkSecurity(){
+	//Vérification SSL
+	if(Config::getSecuritySslEnabled() && empty($_SERVER['HTTPS'])){
+	    header('HTTP/1.1 400 Bad Request', true, 400);
+	    echo '400 BAD REQUEST';
+	    exit();
+	}
+	
 	//Check parameters
 	if(!isset($_REQUEST['sid']) || !isset($_REQUEST['s'])){
 	    header('HTTP/1.1 400 Bad Request', true, 400);
@@ -72,12 +80,17 @@ class RestAppz{
 	    header('HTTP/1.1 401 Unauthorized', true, 401);
 	    echo '401 UNAUTHORIZED';
 	    exit();
+	}else if($callAuth == -3){
+	    header('HTTP/1.1 401 Unauthorized', true, 401);
+	    echo '401 UNAUTHORIZED';
+	    exit();
 	}else{
 	    //OK retour site
+	    Logs::log('Ticket checked successfuly', Logs::TICKETCHECK);
 	    
 	    $data = array(
 		'groups' => $callAuth['groups'],
-		'userData' => array(),
+		'userData' => $callAuth['userData'],
 		'userId' => $callAuth['userId']
 	    );
 	    $secured = openssl_encrypt(json_encode($data), Config::getSecurityEncryptMethod(), Service::getPrivateKey(), false, Config::getSecurityInitializationVector());

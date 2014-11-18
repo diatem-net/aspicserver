@@ -1,0 +1,90 @@
+/*
+    Boostrap
+ */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+   @extend %font-normal;
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+    @extend %font-normal;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.clearfix,
+.clear,
+.cf {
+    @extend %clearfix;
+}
+
+
+.hide,
+.hidden {
+    @extend %hidden;
+}
+
+ul.default {
+    @extend %ul-default;
+}
+ol.default {
+    @extend %ol-default;
+}
+
+[disabled] {
+    cursor: default;
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.text-center {
+    text-align: center !important;
+}
+.no-padding {
+    padding: 0 !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-weight: italic;
+}
+.underline {
+    text-decoration: underline;
+}
+
+@for $i from 1 through 100 {
+    .w#{$i} {
+        width: percentage($i / 100);
+    }
+    .o#{$i} {
+        opacity: $i / 100;
+    }
+}

@@ -17,7 +17,7 @@ class Service{
     public static function init($sid){
 	self::$sid = $sid;
 	
-	$services = JsonLoader::loadFile('../config/services.json');
+	$services = JsonLoader::loadPhpFile('../config/services.php');
 	foreach($services AS $k => $s){
 	    if($k == $sid){
 		self::$initialized = true;
