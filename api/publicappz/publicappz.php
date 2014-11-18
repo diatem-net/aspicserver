@@ -202,13 +202,13 @@ class PublicAppz{
 			);
 		    $secured = openssl_encrypt(json_encode($data), Config::getSecurityEncryptMethod(), Service::getPrivateKey(), false, Config::getSecurityInitializationVector());
 		    $returnUrl = Service::getReturnUrl();
-		    if(StringTools::contains('?', $returnUrl)){
+		    if(StringTools::contains($returnUrl, '?')){
 			$returnUrl .= '&';
 		    }else{
 			$returnUrl .= '?';
 		    }
 		    $returnUrl .= 'sid='.Context::get('serviceId').'&s='.urlencode($secured);
-
+		    
 		    Logs::log('Login successfull', Logs::CNXSUCCESS);
 		    
 		    header('Location:'.$returnUrl);

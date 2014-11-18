@@ -10,5 +10,10 @@ $data = '{
 	"url" : "http://hyprowebdev.diatem.net/ssotest/",
 	"privateKey" : "456",
 	"returnUrl" : "http://hyprowebdev.diatem.net/ssotest/test.php"
+    },
+    "drupalcasdev" : {
+	"url" : "http://drupalcasdev.diatem.net/",
+	"privateKey" : "test",
+	"returnUrl" : "http://drupalcasdev.diatem.net/?q=node"
     }
 }';
