@@ -11,7 +11,9 @@ class DbCnx{
     public static function connect(){
 	if(!self::$connected){
 	    if(Config::getDbType() == 'postgresql'){
-		self::$connected = DbConnexion::connectWithPostgreSql(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbPort(), Config::getDbName());
+			self::$connected = DbConnexion::connectWithPostgreSql(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbPort(), Config::getDbName());
+	    }elseif(Config::getDbType() == 'mysql'){
+	    	self::$connected = DbConnexion::connectWithMySql(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbPort(), Config::getDbName());
 	    }
 	}
 	
