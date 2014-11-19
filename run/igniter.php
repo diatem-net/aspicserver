@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+
 //Initialize launcher for Aspic classes
 include '../api/aspiccore.php';
 spl_autoload_register(array('aspic\AspicCore', 'autoload'));
