@@ -134,6 +134,7 @@ class Logs{
     	}
 
         self::$log_file = StringTools::replaceFirst($_SERVER['SCRIPT_FILENAME'], 'run/igniter.php', '').Config::getLogsFile();
+        self::$initialized = true;
     }
     
 

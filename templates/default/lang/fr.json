@@ -11,5 +11,6 @@
     "login_form_login" : "Votre identifiant",
     "login_form_password" : "Votre password",
     "login_form_submit" : "Se connecter",
-    "error_title" : "Outch !"
+    "error_title" : "Outch !",
+    "error_ipblacklist" : "Votre adresse IP a été bannie en raison d'un nombre de tentatives de connexion suspect."
 }

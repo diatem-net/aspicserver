@@ -84,7 +84,7 @@ class Config{
 	 */
 	public static function getDbType(){
 		self::loadConfig();
-		return self::$data['querying']['database']['dbType'];
+		return self::$data['database']['dbType'];
 	}
 
 
@@ -94,7 +94,7 @@ class Config{
 	 */
 	public static function getDbHost(){
 		self::loadConfig();
-		return self::$data['querying']['database']['dbHost'];
+		return self::$data['database']['dbHost'];
 	}
 
 
@@ -104,7 +104,7 @@ class Config{
 	 */
 	public static function getDbName(){
 		self::loadConfig();
-		return self::$data['querying']['database']['dbName'];
+		return self::$data['database']['dbName'];
 	}
 
 
@@ -114,7 +114,7 @@ class Config{
 	 */
 	public static function getDbUser(){
 		self::loadConfig();
-		return self::$data['querying']['database']['dbUser'];
+		return self::$data['database']['dbUser'];
 	}
 
 
@@ -124,7 +124,7 @@ class Config{
 	 */
 	public static function getDbPort(){
 		self::loadConfig();
-		return intval(self::$data['querying']['database']['dbPort']);
+		return intval(self::$data['database']['dbPort']);
 	}
 
 
@@ -134,7 +134,7 @@ class Config{
 	 */
 	public static function getDbPassword(){
 		self::loadConfig();
-		return self::$data['querying']['database']['dbPassword'];
+		return self::$data['database']['dbPassword'];
 	}
 
 
@@ -164,7 +164,7 @@ class Config{
 	 */
 	public static function getAuthentificationMethod(){
 		self::loadConfig();
-		return self::$data['querying']['authentification']['method'];
+		return self::$data['authentification']['method'];
 	}
 
 
@@ -174,7 +174,7 @@ class Config{
 	 */
 	public static function getAuthentificationParameters(){
 		self::loadConfig();
-		return self::$data['querying']['authentification']['parameters'];
+		return self::$data['authentification']['parameters'];
 	}
 
 
@@ -234,7 +234,7 @@ class Config{
 	 */
 	public static function getAppzCredentialCheckEnabled(){
 		self::loadConfig();
-		return (self::$data['querying']['appzCredentialCheckQuerying']['enabled'] == 'true') ? true : false;
+		return (self::$data['appzCredentialCheckQuerying']['enabled'] == 'true') ? true : false;
 	}
 
 
@@ -244,7 +244,7 @@ class Config{
 	 */
 	public static function getAppzCredentialCheckMethod(){
 		self::loadConfig();
-		return self::$data['querying']['appzCredentialCheckQuerying']['method'];
+		return self::$data['appzCredentialCheckQuerying']['method'];
 	}
 
 
@@ -254,7 +254,7 @@ class Config{
 	 */
 	public static function getAppzCredentialCheckParameters(){
 		self::loadConfig();
-		return self::$data['querying']['appzCredentialCheckQuerying']['parameters'];
+		return self::$data['appzCredentialCheckQuerying']['parameters'];
 	}
 
 
@@ -264,7 +264,7 @@ class Config{
 	 */
 	public static function getUserDataQueryingEnabled(){
 		self::loadConfig();
-		return (self::$data['querying']['userDataQuerying']['enabled'] == 'true') ? true : false;
+		return (self::$data['userDataQuerying']['enabled'] == 'true') ? true : false;
 	}
 
 
@@ -274,7 +274,7 @@ class Config{
 	 */
 	public static function getUserDataQueryingMethod(){
 		self::loadConfig();
-		return self::$data['querying']['userDataQuerying']['method'];
+		return self::$data['userDataQuerying']['method'];
 	}
 
 
@@ -284,7 +284,7 @@ class Config{
 	 */
 	public static function getUserDataQueryingParameters(){
 		self::loadConfig();
-		return self::$data['querying']['userDataQuerying']['parameters'];
+		return self::$data['userDataQuerying']['parameters'];
 	}
 
 
@@ -386,6 +386,56 @@ class Config{
 		self::loadConfig();
 		return self::$data['security']['cronIp'];
 	}
+
+
+    /**
+     * Retourne si la sécurité BlackList IP est activée
+     * @return boolean
+     */
+    public static function getIpBlackListEnabled(){
+        self::loadConfig();
+        return (self::$data['ipBlackList']['enabled'] == 'true') ? true : false;
+    }
+
+
+    /**
+     * Retourne la méthode utilisée pour la sécurité BlackList
+     * @return string
+     */
+    public static function getIpBlackListMethod(){
+        self::loadConfig();
+        return self::$data['ipBlackList']['method'];
+    }
+
+
+    /**
+     * Retourne le nombre maximum d'essais avant mise en liste noire
+     * @return int
+     */
+    public static function getIpBlackListMaxAttempts(){
+        self::loadConfig();
+        return intval(self::$data['ipBlackList']['maxAttempts']);
+    }
+
+
+    /**
+     * Retourne le nombre de minutes pendant lesquelle l'adresse IP est blacklistée
+     * @return int
+     */
+    public static function getIpBlackListTime(){
+        self::loadConfig();
+        return intval(self::$data['ipBlackList']['blackListTime']);
+    }
+
+
+    /**
+     * Retourne les paramètres associé à la méthode de gestion de la blacklist IP
+     * @return array
+     */
+    public static function getIpBlackListParameters(){
+        self::loadConfig();
+        return self::$data['ipBlackList']['parameters'];
+    }
 
 
 	/**

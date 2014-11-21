@@ -1,36 +1,35 @@
 <?php
 $data = '{
     "security" : {
-	"sslEnabled" : false,
-	"passwordEncryptMethod" : "md5",
-	"encryptMethod" : "aes128",
-	"initializationVector" : "1234567812345678",
-	"ssoUID" : "SSODiatem",
-	"serverPrivateKey" : "AFHEB7536276387",
-	"serverUrl" : "http://172.31.6.52/aspicserver/",
-	"sessionMaxTime" : "60",
-	"cronKey" : "ABD5386730ABCD",
-	"cronIp" : "172.16.201.172"
+        "sslEnabled" : false,
+        "passwordEncryptMethod" : "md5",
+        "encryptMethod" : "aes128",
+        "initializationVector" : "1234567812345678",
+        "ssoUID" : "SSODiatem",
+        "serverPrivateKey" : "AFHEB7536276387",
+        "serverUrl" : "http://172.31.6.52/aspicserver/",
+    	"sessionMaxTime" : "60",
+    	"cronKey" : "ABD5386730ABCD",
+    	"cronIp" : "172.16.201.172"
     },
     "logs" : {
-	"logfile" : "logs.txt",
-	"enabled" : true,
-	"log_phperrors" : true,
-	"log_cnxfail" : true,
-	"log_securityalert" : true,
-	"log_cnxsuccess" : true,
-	"log_ticketcheck" : true
+    	"logfile" : "logs.txt",
+    	"enabled" : true,
+    	"log_phperrors" : true,
+    	"log_cnxfail" : true,
+    	"log_securityalert" : true,
+    	"log_cnxsuccess" : true,
+    	"log_ticketcheck" : true
     },
     "render" : {
-	"template" : ""
+        "template" : ""
     },
     "ticketManagement" : {
-	"method" : "file",
-	"parameters" : {
-	    "storage" : "data/"
-	}
+        "method" : "file",
+        "parameters" : {
+	       "storage" : "data/"
+        }
     },
-    "querying" : {
 	"authentification" : {
 	    "method" : "database",
 	    "parameters" : {
@@ -47,16 +46,25 @@ $data = '{
 		"groupNameField" : "groupname"
 	    }
 	},
+    "ipBlackList" : {
+        "method" : "file",
+        "enabled" : "true",
+        "maxAttempts" : "10",
+        "blackListTime" : "30",
+        "parameters" : {
+            "storage" : "data/"
+        }
+    },
 	"userDataQuerying" : {
 	    "method" : "database",
 	    "enabled" : "true",
 	    "parameters" : {
-		"query" : "SELECT tt_nom, tt_prenom FROM tb_utilisateur WHERE tt_identifiant=?",
-		"fields" : {
-		    "nom" : "tt_nom",
-		    "prenom" : "tt_prenom"
+            "query" : "SELECT tt_nom, tt_prenom FROM tb_utilisateur WHERE tt_identifiant=?",
+		      "fields" : {
+		          "nom" : "tt_nom",
+		          "prenom" : "tt_prenom"
+              }
 		}
-	    }
 	},
 	"database" : {
 	    "dbType" : "postgresql",
@@ -65,10 +73,8 @@ $data = '{
 	    "dbUser" : "postgres",
 	    "dbPort" : "5432",
 	    "dbPassword" : "devadmin"
-	}
-	
-    },
+	},
     "librariesLocation" : {
-	"jin" : "../framework-jin/jin/"
+	   "jin" : "../framework-jin/jin/"
     }
 }';
