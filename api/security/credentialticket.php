@@ -65,7 +65,7 @@ class CredentialTicket{
      */
     public static function checkServiceCall($uid, $serviceId){
 	$ticketContent = self::getGlobalTicketData($uid);
-	 
+	
 	if(!$ticketContent){
 	    return -3;
 	}
@@ -79,7 +79,7 @@ class CredentialTicket{
 		if(intval($ticketContent['exptime']) > time()){
 		    $groupes = $ticketContent['services'][$serviceId];
 		    if($groupes == ''){
-			return array('groups' => 'ALL', 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
+			return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
 		    }
 		    return array('groups' => $groupes, 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
 		}else{
@@ -90,7 +90,7 @@ class CredentialTicket{
 	    }
 	}
 	
-	return array('groups' => 'ALL', 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
+	return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
     }
     
     
