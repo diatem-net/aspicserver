@@ -53,6 +53,7 @@ class PublicAppz{
     }
     
     public static function errorHandler_exceptions(\Exception $exception){
+        echo 'ICI';
         self::$errorCatched = true;
 
         Logs::log($exception->getMessage().' (#'.$exception->getCode().') in '.$exception->getFile().' line '.$exception->getLine(), Logs::PHPERROR);
@@ -67,6 +68,7 @@ class PublicAppz{
     }
     
     public static function errorHandler_fatal() {
+        echo 'FATAL';
         $error = error_get_last();
         if ($error !== NULL && !self::$errorCatched) {
             $errno   = $error["type"];
