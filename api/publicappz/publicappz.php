@@ -34,11 +34,6 @@ class PublicAppz{
     }
     
     public static function errorHandler_standard($errno, $errstr, $errfile, $errline){
-        var_dump($errfile);
-        var_dump($errline);
-        var_dump($errstr);
-        var_dump($errno);
-
         Logs::log($errstr.' (#'.$errno.') in '.$errfile.' line '.$errline, Logs::PHPERROR);
 
         self::$errorCatched = true;
@@ -53,7 +48,6 @@ class PublicAppz{
     }
     
     public static function errorHandler_exceptions(\Exception $exception){
-        echo 'ICI';
         self::$errorCatched = true;
 
         Logs::log($exception->getMessage().' (#'.$exception->getCode().') in '.$exception->getFile().' line '.$exception->getLine(), Logs::PHPERROR);
@@ -68,7 +62,6 @@ class PublicAppz{
     }
     
     public static function errorHandler_fatal() {
-        echo 'FATAL';
         $error = error_get_last();
         if ($error !== NULL && !self::$errorCatched) {
             $errno   = $error["type"];
