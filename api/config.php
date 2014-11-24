@@ -438,6 +438,36 @@ class Config{
     }
 
 
+    /**
+     * Retourne si la fonctionnalité de log des connexions est active
+     * @return boolean
+     */
+    public static function getAccessLogEnabled(){
+        self::loadConfig();
+        return (self::$data['accessLog']['enabled'] == 'true') ? true : false;
+    }
+
+
+    /**
+     * Retourne la méthode utilisée pour la fonctionnalité de log des connexions
+     * @return string
+     */
+    public static function getAccessLogMethod(){
+        self::loadConfig();
+        return self::$data['accessLog']['method'];
+    }
+
+
+    /**
+     * Retourne les paramètres associés à la fonctionnalité de log des connexions
+     * @return array
+     */
+    public static function getAccessLogParameters(){
+        self::loadConfig();
+        return self::$data['accessLog']['parameters'];
+    }
+
+
 	/**
 	 * Retourne si l'option httpOnly peut être activée pour la gestion des cookies sécurisés
 	 * @return boolean

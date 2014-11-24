@@ -12,6 +12,7 @@ use aspic\security\ticketmanager\TicketService;
 use jin\lang\StringTools;
 use aspic\Logs;
 use aspic\security\ipblacklist\IpBlackListService;
+use aspic\security\accesslog\AccessLogService;
 
 class PublicAppz{
 
@@ -214,6 +215,11 @@ class PublicAppz{
                     }
                     $returnUrl .= 'sid='.Context::get('serviceId').'&s='.urlencode($secured);
 
+                    //Log de connexion en BDD si activé
+                    if(Config::getAccessLogEnabled()){
+                        AccessLogService::logAccess($callAuth['userId'], Service::getServiceId());
+                    }
+                    
                     Logs::log('Login successfull', Logs::CNXSUCCESS);
 
                     header('Location:'.$returnUrl);

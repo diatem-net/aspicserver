@@ -55,6 +55,13 @@ $data = '{
             "storage" : "data/"
         }
     },
+    "accessLog" : {
+        "method" : "database",
+        "enabled" : "true",
+        "parameters" : {
+            "query" : "INSERT INTO tb_connexion (fk_utilisateur, fk_appz) VALUES ((SELECT pk_utilisateur FROM tb_utilisateur WHERE tt_identifiant=:userId), (SELECT pk_appz FROM tb_appz WHERE tt_code=:serviceId));"
+        }
+    },
     "userDataQuerying" : {
         "method" : "database",
         "enabled" : "true",
