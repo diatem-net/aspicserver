@@ -58,8 +58,11 @@ class IpBlackListFileMethod{
     }
 
     public function clear($ip){
-        $f = new File($this->getFilePath($ip), false);
-        $f->delete();
+        $fp = $this->getFilePath($ip);
+        if(file_exists($fp)){
+            $f = new File($fp, false);
+            $f->delete();
+        }
     }
 
     private function getFileContent($filePath){
