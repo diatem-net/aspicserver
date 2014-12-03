@@ -4,13 +4,13 @@ $data = '{
         "sslEnabled" : false,
         "passwordEncryptMethod" : "md5",
         "encryptMethod" : "aes128",
-        "initializationVector" : "1234567812345678",
+        "initializationVector" : "<Vecteur initialisation AES128>",
         "ssoUID" : "SSODiatem",
-        "serverPrivateKey" : "AFHEB7536276387",
-        "serverUrl" : "http://172.31.6.52/aspicserver/",
+        "serverPrivateKey" : "<Clé privée du serveur>",
+        "serverUrl" : "<Url du serveur>",
         "sessionMaxTime" : "60",
-        "cronKey" : "ABD5386730ABCD",
-        "cronIp" : "172.16.201.172"
+        "cronKey" : "<Clé pour les taches CRON>",
+        "cronIp" : "<IP du serveur accepté pour les taches CRON>"
     },
     "logs" : {
         "logfile" : "logs.txt",
