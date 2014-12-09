@@ -12,7 +12,7 @@ class Lang{
     
     private static function loadLang(){
 	if(!self::$data){
-	    if(is_file('../'.Config::getRenderTemplate().'/templates/lang/'.self::$codeLang.'.json')){
+	    if(is_file('../templates/'.Config::getRenderTemplate().'/lang/'.self::$codeLang.'.json')){
 		self::$data = JsonLoader::loadFile('../templates/'.Config::getRenderTemplate().'/lang/'.self::$codeLang.'.json');
 	    }else{
 		self::$data = JsonLoader::loadFile('../templates/default/lang/'.self::$codeLang.'.json');
