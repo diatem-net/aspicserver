@@ -73,6 +73,9 @@ $data = '{
               }
         }
     },
+    "extraArguments" : {
+	"enabled" : "true"
+    },
     "database" : {
         "dbType" : "postgresql",
         "dbHost" : "127.0.0.1",

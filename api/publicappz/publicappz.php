@@ -25,7 +25,6 @@ class PublicAppz{
     private static $errorCatched;
     
     public function __construct() {
-
         $this->securityCheck();
         if(!$this->currentView){
             $this->credentialTicketCheck();
@@ -33,6 +32,7 @@ class PublicAppz{
 
         $this->render();
     }
+  
     
     public static function errorHandler_standard($errno, $errstr, $errfile, $errline){
         Logs::log($errstr.' (#'.$errno.') in '.$errfile.' line '.$errline, Logs::PHPERROR);
@@ -136,6 +136,47 @@ class PublicAppz{
             $this->currentView = new View('error', $args);
             return;
         }
+	
+	//verification extraArguments
+	if(isset($_GET['e'])){
+	    if(!Config::getExtraArgumentsEnabled()){
+		Logs::log('Bad request - wrong extra parameters (#600)', Logs::SECURITYALERT);
+
+		$args = array(
+		    'errorDetails' => Lang::get('error_arguments'),
+		    'errorCode' => 600
+		    );
+		$this->currentView = new View('error', $args);
+		return;
+	    }else{
+		$decryptedEA = Service::decodeExtraArguments($_REQUEST['e']);
+		if(!$decryptedEA){
+		    Logs::log('Bad request - decrypt error (#700)', Logs::SECURITYALERT);
+
+		    $args = array(
+			'errorDetails' => Lang::get('error_security'),
+			'errorCode' => 700
+			);
+		    $this->currentView = new View('error', $args);
+		    return;
+		}else{
+		    $eargs = json_decode($decryptedEA);
+		    if(!$eargs){
+			
+			Logs::log('Bad request - decrypt error (#800)', Logs::SECURITYALERT);
+
+			$args = array(
+			    'errorDetails' => Lang::get('error_security'),
+			    'errorCode' => 800
+			    );
+			$this->currentView = new View('error', $args);
+			return;
+		    }else{
+			Context::put('extraArguments', $eargs);
+		    }
+		}
+	    }
+	}
 
         $userAgent = $decrypted[2];
         $callUrl = $decrypted[1];
@@ -199,6 +240,11 @@ class PublicAppz{
                     header('Location:'.Service::getReturnUrl()); 
                     exit();
                 }else{
+		    //UPDATE DATAS
+		    if(Context::get('extraArguments')){
+			CredentialTicket::updateExtraArguments($uid, Context::get('extraArguments'));
+		    }
+		    
                     //LOGIN
                     $data = array(
                         'uid' => $uid,
@@ -214,7 +260,7 @@ class PublicAppz{
                         $returnUrl .= '?';
                     }
                     $returnUrl .= 'sid='.Context::get('serviceId').'&s='.urlencode($secured);
-
+		    
                     //Log de connexion en BDD si activé
                     if(Config::getAccessLogEnabled()){
                         AccessLogService::logAccess($callAuth['userId'], Service::getServiceId());
@@ -222,6 +268,7 @@ class PublicAppz{
                     
                     Logs::log('Login successfull', Logs::CNXSUCCESS);
 
+		    
                     header('Location:'.$returnUrl);
                     exit();
                 }

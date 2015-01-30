@@ -20,7 +20,7 @@ class Config{
 	 * Version du serveur
 	 * @var string
 	 */
-	private static $version = '0.3.0';
+	private static $version = '1.0.0';
 
 	
 	/**
@@ -465,6 +465,16 @@ class Config{
     public static function getAccessLogParameters(){
         self::loadConfig();
         return self::$data['accessLog']['parameters'];
+    }
+    
+    
+    /**
+     * Retourne si le passage de données supplémentaires est autorisé
+     * @return boolean
+     */
+    public static function getExtraArgumentsEnabled(){
+	self::loadConfig();
+	return (self::$data['extraArguments']['enabled'] == 'true') ? true : false;
     }
 
 
