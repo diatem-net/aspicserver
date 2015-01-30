@@ -250,7 +250,8 @@ class PublicAppz{
                         'uid' => $uid,
                         'userId' => $callAuth['userId'],
                         'groups' => $callAuth['groups'],
-                        'userData' => array()
+                        'userData' => array(),
+			'extraArguments' => $callAuth['extraArguments']
                         );
                     $secured = openssl_encrypt(json_encode($data), Config::getSecurityEncryptMethod(), Service::getPrivateKey(), false, Config::getSecurityInitializationVector());
                     $returnUrl = Service::getReturnUrl();
