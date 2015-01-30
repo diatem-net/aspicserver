@@ -16,7 +16,7 @@ class CredentialTicket{
 	return SecureCookie::cookieExists(Config::getSsoUID());
     }
     
-    public static function authentifiate($username, $password){
+    public static function authentifiate($username, $password, $extraArguments = array()){
 	$r = AuthService::authentifiateUserWithCredentials($username, $password);
 	
 	if($r){
@@ -40,8 +40,10 @@ class CredentialTicket{
 		'uagent' => Context::get('userAgent'),
 		'userId' => $username,
 		'userData' => $userData,
-		'services' => $services
+		'services' => $services,
+		'extraArguments' => $extraArguments
 	    );
+	    
 
 	    TicketService::put($uid, $data);
 	    
@@ -79,9 +81,9 @@ class CredentialTicket{
 		if(intval($ticketContent['exptime']) > time()){
 		    $groupes = $ticketContent['services'][$serviceId];
 		    if($groupes == ''){
-			return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
+			return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
 		    }
-		    return array('groups' => $groupes, 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
+		    return array('groups' => $groupes, 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
 		}else{
 		    return -3;
 		}
@@ -90,7 +92,19 @@ class CredentialTicket{
 	    }
 	}
 	
-	return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData']);
+	return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
+    }
+    
+    public static function updateExtraArguments($uid, $data){
+	$ticketContent = self::getGlobalTicketData($uid);
+	
+	if(Config::getExtraArgumentsEnabled()){
+	    foreach($data AS $k => $v){
+		$ticketContent['extraArguments'][$k] = $v;
+	    }
+	}
+	
+	TicketService::put($uid, $ticketContent);
     }
     
     

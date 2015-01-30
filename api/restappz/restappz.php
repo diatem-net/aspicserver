@@ -88,17 +88,15 @@ class RestAppz{
 	    //OK retour site
 	    Logs::log('Ticket checked successfuly', Logs::TICKETCHECK);
 	    
-	    
-	    
 	    $data = array(
 		'groups' => $callAuth['groups'],
 		'userData' => $callAuth['userData'],
 		'userId' => $callAuth['userId']
 	    );
 	    
-	    //echo 'ICI : ';
-	    //var_dump($data);
-	    //exit;
+	    if(Config::getExtraArgumentsEnabled()){
+		$data['extraArguments'] = $callAuth['extraArguments'];
+	    }
 	    
 	    $secured = openssl_encrypt(json_encode($data), Config::getSecurityEncryptMethod(), Service::getPrivateKey(), false, Config::getSecurityInitializationVector());
 	    echo $secured;
