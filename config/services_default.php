@@ -4,6 +4,7 @@ $data = '{
     "serviceName" : {
        "url" : "<Url du service>",
        "privateKey" : "<Cle privée>",
-       "returnUrl" : "<Url de retour après identification>"
+       "loginReturnUrl" : "<Url de retour après identification",
+       "logoutReturnUrl" : "Url de retour après logout"
    }
 }';

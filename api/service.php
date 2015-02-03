@@ -36,28 +36,35 @@ class Service {
     private static $baseUrl;
 
     /**
-     * Url de retour du service après login/logout
+     * Url de retour du service après login
      * @var string
      */
-    private static $returnUrl;
+    private static $loginReturnUrl;
+
+    /**
+     * Url de retour du service après logout
+     * @var string
+     */
+    private static $logoutReturnUrl;
 
     /**
      * Initialisation des données du service courant
      * @param  string $sid ServiceID
      */
     public static function init($sid) {
-	self::$sid = $sid;
+        self::$sid = $sid;
 
-	$services = JsonLoader::loadPhpFile('../config/services.php');
-	foreach ($services AS $k => $s) {
-	    if ($k == $sid) {
-		self::$initialized = true;
-		self::$privateKey = $s['privateKey'];
-		self::$baseUrl = $s['url'];
-		self::$returnUrl = $s['returnUrl'];
-		break;
-	    }
-	}
+        $services = JsonLoader::loadPhpFile('../config/services.php');
+        foreach ($services AS $k => $s) {
+            if ($k == $sid) {
+                self::$initialized = true;
+                self::$privateKey = $s['privateKey'];
+                self::$baseUrl = $s['url'];
+                self::$loginReturnUrl = $s['loginReturnUrl'];
+                self::$logoutReturnUrl = $s['logoutreturnUrl'];
+                break;
+            }
+        }
     }
 
     /**
@@ -65,7 +72,7 @@ class Service {
      * @return boolean
      */
     public static function exists() {
-	return self::$initialized;
+        return self::$initialized;
     }
 
     /**
@@ -74,26 +81,25 @@ class Service {
      * @return string
      */
     public static function decodeString($data) {
-	self::check();
+        self::check();
 
-	$decrypted = openssl_decrypt($data, Config::getSecurityEncryptMethod(), self::$privateKey, false, Config::getSecurityInitializationVector());
+        $decrypted = openssl_decrypt($data, Config::getSecurityEncryptMethod(), self::$privateKey, false, Config::getSecurityInitializationVector());
 
-	if (!$decrypted) {
-	    return false;
-	}
-	return explode('|', $decrypted);
+        if (!$decrypted) {
+            return false;
+        }
+        return explode('|', $decrypted);
     }
 
-    
     public static function decodeExtraArguments($data) {
-	self::check();
+        self::check();
 
-	$decrypted = openssl_decrypt($data, Config::getSecurityEncryptMethod(), self::$privateKey, false, Config::getSecurityInitializationVector());
+        $decrypted = openssl_decrypt($data, Config::getSecurityEncryptMethod(), self::$privateKey, false, Config::getSecurityInitializationVector());
 
-	if (!$decrypted) {
-	    return false;
-	}
-	return $decrypted;
+        if (!$decrypted) {
+            return false;
+        }
+        return $decrypted;
     }
 
     /**
@@ -101,10 +107,10 @@ class Service {
      * @param  string $url url d'appel
      */
     public static function checkCallerUrl($url) {
-	if (strstr($url, self::$baseUrl) === false) {
-	    return false;
-	}
-	return true;
+        if (strstr($url, self::$baseUrl) === false) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -112,17 +118,26 @@ class Service {
      * @return string
      */
     public static function getServiceId() {
-	self::check();
-	return self::$sid;
+        self::check();
+        return self::$sid;
     }
 
     /**
      * Retourne l'url de retour du service après login/logouy
      * @return string
      */
-    public static function getReturnUrl() {
-	self::check();
-	return self::$returnUrl;
+    public static function getLoginReturnUrl() {
+        self::check();
+        return self::$loginReturnUrl;
+    }
+
+    /**
+     * Retourne l'url de retour du service après logout
+     * @return string
+     */
+    public static function getLogoutReturnUrl() {
+        self::check();
+        return self::$logoutReturnUrl;
     }
 
     /**
@@ -130,17 +145,17 @@ class Service {
      * @return string
      */
     public static function getPrivateKey() {
-	self::check();
-	return self::$privateKey;
+        self::check();
+        return self::$privateKey;
     }
 
     /**
      * Vérifie si initialisé, si non initialisé, initialise.
      */
     private static function check() {
-	if (!self::$initialized) {
-	    throw new \Exception('Service non initialisé.');
-	}
+        if (!self::$initialized) {
+            throw new \Exception('Service non initialisé.');
+        }
     }
 
 }
