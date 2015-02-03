@@ -61,7 +61,7 @@ class Service {
                 self::$privateKey = $s['privateKey'];
                 self::$baseUrl = $s['url'];
                 self::$loginReturnUrl = $s['loginReturnUrl'];
-                self::$logoutReturnUrl = $s['logoutreturnUrl'];
+                self::$logoutReturnUrl = $s['logoutReturnUrl'];
                 break;
             }
         }
