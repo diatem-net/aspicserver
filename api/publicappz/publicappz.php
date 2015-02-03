@@ -237,7 +237,7 @@ class PublicAppz{
                     Logs::log('Logout successfull', Logs::CNXSUCCESS);
 
                     CredentialTicket::logout($uid);
-                    header('Location:'.Service::getReturnUrl()); 
+                    header('Location:'.Service::getLogoutReturnUrl()); 
                     exit();
                 }else{
 		    //UPDATE DATAS
@@ -254,7 +254,7 @@ class PublicAppz{
 			'extraArguments' => $callAuth['extraArguments']
                         );
                     $secured = openssl_encrypt(json_encode($data), Config::getSecurityEncryptMethod(), Service::getPrivateKey(), false, Config::getSecurityInitializationVector());
-                    $returnUrl = Service::getReturnUrl();
+                    $returnUrl = Service::getLoginReturnUrl();
                     if(StringTools::contains($returnUrl, '?')){
                         $returnUrl .= '&';
                     }else{

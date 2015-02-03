@@ -20,7 +20,7 @@ class Config{
 	 * Version du serveur
 	 * @var string
 	 */
-	private static $version = '1.0.0';
+	private static $version = '1.1.0';
 
 	
 	/**
