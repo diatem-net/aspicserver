@@ -86,5 +86,7 @@ $data = '{
     },
     "librariesLocation" : {
        "jin" : "../framework-jin/jin/"
+    },
+    "localConfig" : {
     }
 }';
