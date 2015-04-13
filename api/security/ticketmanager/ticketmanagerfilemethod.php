@@ -37,7 +37,10 @@ class TicketManagerFileMethod{
     public function clear(){
         $handle=opendir($this->dataFolder);
         while ($File = readdir($handle)) {
-            if ($File != "." && $File != "..") {
+            if ($File != "." 
+                    && $File != ".." 
+                    &&File != '.gitignore' 
+                    &&File != '.htaccess') {
                 unlink($this->dataFolder.$File);
             }
         }
