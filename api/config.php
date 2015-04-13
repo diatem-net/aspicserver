@@ -20,7 +20,7 @@ class Config {
      * Version du serveur
      * @var string
      */
-    private static $version = '1.2.2';
+    private static $version = '1.3.0';
 
     /**
      * Retourne le nom du template de rendu utilisé
