@@ -4,6 +4,7 @@ namespace aspic;
 
 use aspic\utils\JsonLoader;
 use aspic\Config;
+use jin\lang\ArrayTools;
 
 /**
  * Gestion des services
@@ -30,10 +31,10 @@ class Service {
     private static $privateKey;
 
     /**
-     * Url de base du service
-     * @var string
+     * Urls de base du service
+     * @var array
      */
-    private static $baseUrl;
+    private static $baseUrl = array();
 
     /**
      * Url de retour du service après login
@@ -59,7 +60,11 @@ class Service {
             if ($k == $sid) {
                 self::$initialized = true;
                 self::$privateKey = $s['privateKey'];
-                self::$baseUrl = $s['url'];
+				if(is_array($s['url'])){
+					self::$baseUrl = $s['url'];
+				}else{
+					self::$baseUrl[] = $s['url'];
+				}
                 self::$loginReturnUrl = $s['loginReturnUrl'];
                 self::$logoutReturnUrl = $s['logoutReturnUrl'];
                 break;
@@ -107,10 +112,14 @@ class Service {
      * @param  string $url url d'appel
      */
     public static function checkCallerUrl($url) {
-        if (strstr($url, self::$baseUrl) === false) {
-            return false;
-        }
-        return true;
+		$found = false;
+		foreach(self::$baseUrl AS $baseUrl){
+			if (strstr($url, $baseUrl) !== false) {
+				$found = true;
+			}
+		}
+        
+		return $found;
     }
 
     /**
