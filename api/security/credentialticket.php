@@ -11,114 +11,114 @@ use aspic\Context;
 use aspic\security\userdata\UserDataService;
 use aspic\security\appzcredentialcheck\AppzCredentialCheckService;
 
-class CredentialTicket{
-    public static function isGlobalTicketDefined(){
-	return SecureCookie::cookieExists(Config::getSsoUID());
-    }
-    
-    public static function authentifiate($username, $password, $extraArguments = array()){
-	$r = AuthService::authentifiateUserWithCredentials($username, $password);
-	
-	if($r){
-	    //authentification OK. Création du jeton global
-	    $uid = TicketService::createUID($username);
-	    
-	    //userData
-	    $userData = array();
-	    if(Config::getUserDataQueryingEnabled()){
-		$userData = UserDataService::getUserData($username);
-	    }
-	    
-	    //services
-	    $services = array();
-	    if(Config::getAppzCredentialCheckEnabled()){
-		$services = AppzCredentialCheckService::getCredentials($username);
-	    }
-	    
-	    $data = array(
-		'exptime' => time()+(Config::getSecuritySessionMaxTime()*60),
-		'uagent' => Context::get('userAgent'),
-		'userId' => $username,
-		'userData' => $userData,
-		'services' => $services,
-		'extraArguments' => $extraArguments
-	    );
-	    
+class CredentialTicket {
 
-	    TicketService::put($uid, $data);
-	    
-	    //Création du cookie
-	    SecureCookie::setSecureCookie(Config::getSecuritySsoUID(), Config::getSecuritySsoUID(), $uid, Config::getSecurityServerPrivateKey(), 0, '', '', Config::getSecuritySslEnabled(), Config::getHttpOnlyCookiesEnabled());
-	    
-	    return $uid;
+	public static function isGlobalTicketDefined() {
+		return SecureCookie::cookieExists(Config::getSsoUID());
 	}
-	return $r;
-    }
-    
-    public static function getGlobalTicketData($uid){
-	return TicketService::get($uid);
-    }
-    
-    /**
-     * 
-     * @param type $uid
-     * @param type $serviceId
-     * @return string|integer	-1 : erreur de securité. -2 : utilisateur n'ayant pas le droit de se connecter à cet applicatif. -3 session expirée Sinon groupes de droit locaux. (ALL pour tous droits - par défaut si pas de vérification de droit par applicatif)
-     */
-    public static function checkServiceCall($uid, $serviceId){
-	$ticketContent = self::getGlobalTicketData($uid);
-	
-	if(!$ticketContent){
-	    return -3;
-	}
-	
-	if($ticketContent['uagent'] != Context::get('userAgent')){
-	    return -1;
-	}
-	
-	if(Config::getAppzCredentialCheckEnabled()){
-	    if(isset($ticketContent['services'][$serviceId])){
-		if(intval($ticketContent['exptime']) > time()){
-		    $groupes = $ticketContent['services'][$serviceId];
-		    if($groupes == ''){
-			return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
-		    }
-		    return array('groups' => $groupes, 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
-		}else{
-		    return -3;
+
+	public static function authentifiate($username, $password, $extraArguments = array()) {
+		$r = AuthService::authentifiateUserWithCredentials($username, $password);
+
+		if ($r) {
+			//authentification OK. Création du jeton global
+			$uid = TicketService::createUID($username);
+
+			//userData
+			$userData = array();
+			if (Config::getUserDataQueryingEnabled()) {
+				$userData = UserDataService::getUserData($username);
+			}
+
+			//services
+			$services = array();
+			if (Config::getAppzCredentialCheckEnabled()) {
+				$services = AppzCredentialCheckService::getCredentials($username);
+			}
+
+			$data = array(
+				'exptime' => time() + (Config::getSecuritySessionMaxTime() * 60),
+				'uagent' => Context::get('userAgent'),
+				'userId' => $username,
+				'userData' => $userData,
+				'services' => $services,
+				'extraArguments' => $extraArguments
+			);
+
+
+			TicketService::put($uid, $data);
+
+			//Création du cookie
+			SecureCookie::setSecureCookie(Config::getSecuritySsoUID(), Config::getSecuritySsoUID(), $uid, Config::getSecurityServerPrivateKey(), 0, '', '', Config::getSecuritySslEnabled(), Config::getHttpOnlyCookiesEnabled());
+
+			return $uid;
 		}
-	    }else{
-		return -2;
-	    }
+		return $r;
 	}
-	
-	return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
-    }
-    
-    public static function updateExtraArguments($uid, $data){
-	$ticketContent = self::getGlobalTicketData($uid);
-	
-	if(Config::getExtraArgumentsEnabled()){
-	    foreach($data AS $k => $v){
-		$ticketContent['extraArguments'][$k] = $v;
-	    }
+
+	public static function getGlobalTicketData($uid) {
+		return TicketService::get($uid);
 	}
-	
-	TicketService::put($uid, $ticketContent);
-    }
-    
-    
-    public static function logout($uid){
-	SecureCookie::delete(Config::getSecuritySsoUID());
-	TicketService::delete($uid);
-    }
-    
-    public static function checkGlobalTicket(){
-	$valid = SecureCookie::getSecureCookie(Config::getSecuritySsoUID(), Config::getSecuritySsoUID(), Config::getSecurityServerPrivateKey(), Context::get('userAgent'), 0);
-	if(!$valid){
-	    SecureCookie::delete(Config::getSecuritySsoUID());
+
+	/**
+	 * 
+	 * @param type $uid
+	 * @param type $serviceId
+	 * @return string|integer	-1 : erreur de securité. -2 : utilisateur n'ayant pas le droit de se connecter à cet applicatif. -3 session expirée Sinon groupes de droit locaux. (ALL pour tous droits - par défaut si pas de vérification de droit par applicatif)
+	 */
+	public static function checkServiceCall($uid, $serviceId) {
+		$ticketContent = self::getGlobalTicketData($uid);
+
+		if (!$ticketContent) {
+			return -3;
+		}
+
+		if ($ticketContent['uagent'] != Context::get('userAgent')) {
+			return -1;
+		}
+
+		if (Config::getAppzCredentialCheckEnabled()) {
+			if (isset($ticketContent['services'][$serviceId])) {
+				if (intval($ticketContent['exptime']) > time()) {
+					$groupes = $ticketContent['services'][$serviceId];
+					if ($groupes == '') {
+						return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
+					}
+					return array('groups' => $groupes, 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
+				} else {
+					return -3;
+				}
+			} else {
+				return -2;
+			}
+		}
+
+		return array('groups' => array(), 'userId' => $ticketContent['userId'], 'userData' => $ticketContent['userData'], 'extraArguments' => $ticketContent['extraArguments']);
 	}
-	return $valid;
-    }
-    
+
+	public static function updateExtraArguments($uid, $data) {
+		$ticketContent = self::getGlobalTicketData($uid);
+
+		if (Config::getExtraArgumentsEnabled()) {
+			foreach ($data AS $k => $v) {
+				$ticketContent['extraArguments'][$k] = $v;
+			}
+		}
+
+		TicketService::put($uid, $ticketContent);
+	}
+
+	public static function logout($uid) {
+		SecureCookie::delete(Config::getSecuritySsoUID());
+		TicketService::delete($uid);
+	}
+
+	public static function checkGlobalTicket() {
+		$valid = SecureCookie::getSecureCookie(Config::getSecuritySsoUID(), Config::getSecuritySsoUID(), Config::getSecurityServerPrivateKey(), Context::get('userAgent'), 0);
+		if (!$valid) {
+			SecureCookie::delete(Config::getSecuritySsoUID());
+		}
+		return $valid;
+	}
+
 }
