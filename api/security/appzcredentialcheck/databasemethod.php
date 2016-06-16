@@ -9,8 +9,7 @@ use aspic\Config;
 
 class DatabaseMethod{
     public function getCredentials($username){
-	echo 'GET CRED';
-	
+
 	$r = DbCnx::connect();
 	if(!$r){
 	    throw new \Exception('Erreur de connexion BDD');

@@ -35,6 +35,12 @@ class Service {
      * @var array
      */
     private static $baseUrl = array();
+	
+	/**
+	 * Index url utilisée
+	 * @var integer	
+	 */
+	private static $baseUrlIndex = 0;
 
     /**
      * Url de retour du service après login
@@ -113,10 +119,13 @@ class Service {
      */
     public static function checkCallerUrl($url) {
 		$found = false;
+		$i = 0;
 		foreach(self::$baseUrl AS $baseUrl){
 			if (strstr($url, $baseUrl) !== false) {
+				self::$baseUrlIndex = $i;
 				$found = true;
 			}
+			$i++;
 		}
         
 		return $found;
@@ -137,7 +146,7 @@ class Service {
      */
     public static function getLoginReturnUrl() {
         self::check();
-        return self::$loginReturnUrl;
+        return self::$baseUrl[self::$baseUrlIndex].self::$loginReturnUrl;
     }
 
     /**
@@ -146,7 +155,7 @@ class Service {
      */
     public static function getLogoutReturnUrl() {
         self::check();
-        return self::$logoutReturnUrl;
+        return self::$baseUrl[self::$baseUrlIndex].self::$logoutReturnUrl;
     }
 
     /**
